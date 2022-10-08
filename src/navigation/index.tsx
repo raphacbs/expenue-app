@@ -90,6 +90,8 @@ function BottomTabNavigator() {
         component={TabAccount}
         options={{
           title: "Minha contas",
+          tabBarActiveTintColor: "#ff6600",
+
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="account-balance" color={color} />
           ),
@@ -102,6 +104,7 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={{
           title: "Configurações",
+          tabBarActiveTintColor: "#ff6600",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="settings" color={color} />
           ),

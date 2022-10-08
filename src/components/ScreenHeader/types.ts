@@ -1,5 +1,5 @@
 export interface Props {
-    title: string;
+    title: React.ReactNode;
     subtitle: string;
     actionOne?: {
         icon: string;

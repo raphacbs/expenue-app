@@ -1,5 +1,6 @@
 import { Props } from "./types";
 import { Appbar } from "react-native-paper";
+
 import { View } from "../Themed";
 
 export default function ScreenHeader({
@@ -11,16 +12,24 @@ export default function ScreenHeader({
 }: Props) {
   return (
     <View>
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: "#ff6600" }}>
         <Appbar.Content title={title} subtitle={subtitle} />
         {actionOne ? (
-          <Appbar.Action icon={actionOne.icon} onPress={actionOne.onPress} />
+          <Appbar.Action
+            color="#FFFFFFFF"
+            icon={actionOne.icon}
+            onPress={actionOne.onPress}
+          />
         ) : null}
         {actionTwo ? (
-          <Appbar.Action icon={actionTwo.icon} onPress={actionTwo.onPress} />
+          <Appbar.Action
+            icon={actionTwo.icon}
+            color="#FFFFFFFF"
+            onPress={actionTwo.onPress}
+          />
         ) : null}
       </Appbar.Header>
-      <View style={{ margin: 10 }}>{children}</View>
+      <View style={{ height: 50, backgroundColor: "#ff6600" }}>{children}</View>
     </View>
   );
 }

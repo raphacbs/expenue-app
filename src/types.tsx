@@ -38,8 +38,8 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
-export type AccountResponseBody = {
-  id: string;
+export type AccountFullResponseBody = {
+  id: number;
   description: string;
   balanceDescription: string;
   totalRevenuesDescription: string;
@@ -47,4 +47,31 @@ export type AccountResponseBody = {
   balance: number;
   totalRevenues: number;
   totalExpenses: number;
+  selectedPeriod: Period;
+  nextMonth: Period;
+  previousMonth: Period;
+  transactions: Array<TransactionBody>;
+};
+
+export type SimpleAccountResponseBody = {
+  id: string;
+  accountDescription: string;
+  currentBalance: string;
+  accountTypeDescription: string;
+};
+
+type Period = {
+  description: string;
+  startDate: string;
+  endDate: string;
+};
+
+export type TransactionBody = {
+  amountDescription: string;
+  amount: number;
+  description: string;
+  dateValue: string;
+  date: string;
+  type: string;
+  id: number;
 };
