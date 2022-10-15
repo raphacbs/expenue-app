@@ -10,6 +10,7 @@ import {
   Heading,
   HStack,
   IconButton,
+  Skeleton,
   Text,
   VStack,
 } from "native-base";
@@ -27,16 +28,23 @@ import {
 } from "../../types";
 import { useDispatch } from "react-redux";
 import { Dimensions, StyleSheet } from "react-native";
+import {
+  SET_LOADING_DETAILS_OFF,
+  SET_LOADING_DETAILS_ON,
+  SET_LOADING_OFF,
+  SET_LOADING_ON,
+} from "../../constants/ActionsTypes";
 
 interface Props {
   showValues: boolean;
   accounts: Array<SimpleAccountResponseBody>;
   selectedAccount: AccountFullResponseBody;
+  loadingDetails: boolean;
 }
 const { width } = Dimensions.get("window");
 
 const HeaderAccount = (props: Props) => {
-  const { accounts, showValues, selectedAccount } = props;
+  const { accounts, showValues, selectedAccount, loadingDetails } = props;
   const dispatch = useDispatch();
   const combobox = React.useRef();
 
@@ -46,19 +54,23 @@ const HeaderAccount = (props: Props) => {
     }
   );
 
-  const handleAccount = (id: string) => {
+  const handleAccount = async (id: string) => {
     const account = accounts.find(
       (account: { id: string }) => account.id === id
     );
-    dispatch(setSelectedAccount(account));
+    await dispatch({ type: SET_LOADING_DETAILS_ON });
+    await dispatch(setSelectedAccount(account));
+    await dispatch({ type: SET_LOADING_DETAILS_OFF });
   };
 
-  const handleAccountDetails = (
+  const handleAccountDetails = async (
     id: number,
     startDate: string,
     endDate: string
   ) => {
-    dispatch(getAccountDetailsByPeriod(id, startDate, endDate));
+    await dispatch({ type: SET_LOADING_DETAILS_ON });
+    await dispatch(getAccountDetailsByPeriod(id, startDate, endDate));
+    await dispatch({ type: SET_LOADING_DETAILS_OFF });
   };
 
   return (
@@ -135,9 +147,16 @@ const HeaderAccount = (props: Props) => {
             );
           }}
         />
-        <Text style={{ color: "#FFF", fontSize: 18, marginTop: 10 }}>
-          {selectedAccount.selectedPeriod.description}
-        </Text>
+        <Skeleton.Text
+          lines={1}
+          marginTop={4}
+          w={75}
+          isLoaded={!loadingDetails}
+        >
+          <Text style={{ color: "#FFF", fontSize: 18, marginTop: 10 }}>
+            {selectedAccount.selectedPeriod.description}
+          </Text>
+        </Skeleton.Text>
         <IconButton
           colorScheme="white"
           key={"arrow-forward-ios"}
@@ -157,9 +176,16 @@ const HeaderAccount = (props: Props) => {
         />
       </HStack>
       <HStack justifyContent={"space-between"}>
-        <Heading size={"2xl"} color={"white"}>
-          {showValues ? selectedAccount.balanceDescription : "****"}
-        </Heading>
+        <Skeleton.Text
+          lines={1}
+          marginTop={4}
+          w={75}
+          isLoaded={!loadingDetails}
+        >
+          <Heading size={"2xl"} color={"white"}>
+            {showValues ? selectedAccount.balanceDescription : "****"}
+          </Heading>
+        </Skeleton.Text>
         <IconButton
           colorScheme="white"
           key={"eye"}
@@ -189,11 +215,20 @@ const HeaderAccount = (props: Props) => {
                 <Heading color={"gray.500"} size={"xs"}>
                   Total Revenues
                 </Heading>
-                <Heading color={"green.500"}>
-                  {showValues
-                    ? selectedAccount.totalRevenuesDescription
-                    : "****"}
-                </Heading>
+                <Skeleton.Text
+                  lines={1}
+                  marginTop={4}
+                  w={75}
+                  h={5}
+                  isLoaded={!loadingDetails}
+                  startColor={"green.500"}
+                >
+                  <Heading color={"green.500"}>
+                    {showValues
+                      ? selectedAccount.totalRevenuesDescription
+                      : "****"}
+                  </Heading>
+                </Skeleton.Text>
               </Center>
             </VStack>
             <VStack space={2}>
@@ -201,11 +236,20 @@ const HeaderAccount = (props: Props) => {
                 <Heading color={"gray.500"} size={"xs"}>
                   Total Expenses
                 </Heading>
-                <Heading color={"red.500"}>
-                  {showValues
-                    ? selectedAccount.totalExpensesDescription
-                    : "****"}
-                </Heading>
+                <Skeleton.Text
+                  lines={1}
+                  marginTop={4}
+                  w={75}
+                  h={5}
+                  isLoaded={!loadingDetails}
+                  startColor={"red.500"}
+                >
+                  <Heading color={"red.500"}>
+                    {showValues
+                      ? selectedAccount.totalExpensesDescription
+                      : "****"}
+                  </Heading>
+                </Skeleton.Text>
               </Center>
             </VStack>
           </HStack>
@@ -268,6 +312,7 @@ const mapStateToProps = (store: any) => {
     showValues: store.accountReducer.showValues,
     accounts: store.accountReducer.accounts,
     selectedAccount: store.accountReducer.selectedAccount,
+    loadingDetails: store.accountReducer.loadingDetails,
   };
 };
 

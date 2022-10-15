@@ -1,17 +1,9 @@
-import {
-  IconButton,
-  Heading,
-  HStack,
-  Icon,
-  Stack,
-  Text,
-  VStack,
-} from "native-base";
+import { IconButton, Heading, HStack, Text, VStack } from "native-base";
 import React from "react";
 import { List } from "react-native-paper";
 import { TransactionBody } from "../../types";
 import { connect } from "react-redux";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 interface Props {
   item: TransactionBody;
@@ -21,14 +13,10 @@ interface Props {
 const TransactionItem = (props: Props) => {
   const { item, showValues } = props;
   return (
-    <HStack
-      w={"100%"}
-      justifyContent="space-between"
-      paddingBottom={2}
-      paddingTop={2}
-    >
-      <HStack space={3}>
+    <VStack w={"100%"} justifyContent="center" marginTop={2}>
+      <HStack flex={1} space={5}>
         <IconButton
+          flex={1.2}
           bg="principal.900"
           rounded={50}
           variant={"solid"}
@@ -38,43 +26,19 @@ const TransactionItem = (props: Props) => {
             size: "lg",
           }}
         />
-        <VStack justifyContent={"center"}>
-          <Heading size={"sm"}>{item.description}</Heading>
+        <VStack flex={10} justifyContent={"center"}>
+          <Heading isTruncated size={"sm"}>
+            {item.description}
+          </Heading>
           <Text fontSize={10} color={"gray.400"}>
             {item.dateValue}
           </Text>
         </VStack>
-      </HStack>
-      <VStack justifyContent="center" marginRight={"2%"}>
-        <Heading size={"sm"}>
+        <Heading flex={5} marginTop={1} size={"sm"}>
           {showValues ? item.amountDescription : "****"}
         </Heading>
-      </VStack>
-    </HStack>
-    // <List.Item
-    //   title={
-    //     <VStack>
-    //       <Text>{item.description}</Text>
-    //     </VStack>
-    //   }
-    //   description={
-    //     <Stack>
-    //       <Text>{item.dateValue}</Text>
-    //     </Stack>
-    //   }
-    //   right={() => (
-    //     <Heading size={"sm"}>
-    //       {showValues ? item.amountDescription : "****"}
-    //     </Heading>
-    //   )}
-    //   left={(props) => (
-    //     <List.Icon
-    //       {...props}
-    //       icon="circle"
-    //       color={item.type == "REVENUE" ? "green" : "red"}
-    //     />
-    //   )}
-    // />
+      </HStack>
+    </VStack>
   );
 };
 const mapStateToProps = (store: any) => {

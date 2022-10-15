@@ -1,11 +1,11 @@
-import { RECEIVE_ACCOUNTS, SET_SELECTED_ACCOUNT, SET_SHOW_VALUES } from '../../constants/ActionsTypes'
+import { RECEIVE_ACCOUNTS, SET_LOADING_DETAILS_OFF, SET_LOADING_DETAILS_ON, SET_SELECTED_ACCOUNT, SET_SHOW_VALUES } from '../../constants/ActionsTypes'
 import { AccountState } from '../stateModels'
 
 const initialState: AccountState = {
     accounts: [],
     showValues: false,
     selectedAccount: {
-        id: '',
+        id: 0,
         description: '',
         balanceDescription: '',
         totalRevenuesDescription: '',
@@ -29,7 +29,9 @@ const initialState: AccountState = {
             endDate: ''
         },
         transactions: []
-    }
+    },
+    loadingDetails: false
+
 }
 
 const account = (state: AccountState = initialState, action: any) => {
@@ -48,6 +50,16 @@ const account = (state: AccountState = initialState, action: any) => {
             return {
                 ...state,
                 selectedAccount: action.selectedAccount
+            }
+        case SET_LOADING_DETAILS_OFF:
+            return {
+                ...state,
+                loadingDetails: false
+            }
+        case SET_LOADING_DETAILS_ON:
+            return {
+                ...state,
+                loadingDetails: true
             }
         default:
             return state;

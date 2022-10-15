@@ -3,7 +3,7 @@ import { Center, VStack, Stack, Box, Heading, Button } from "native-base";
 import { connect } from "react-redux";
 import LottieView from "lottie-react-native";
 import React, { useRef } from "react";
-import { RefreshControl } from "react-native";
+import { RefreshControl, ScrollView } from "react-native";
 
 interface Props {
   loading: boolean;
@@ -26,36 +26,40 @@ const Container = (props: Props) => {
   return (
     <Stack>
       {loading ? (
-        <RefreshControl
-          style={{
-            justifyContent: "center",
-            //alignSelf: "center",
-            alignItems: "center",
-            width: "100%",
-          }}
-          refreshing={loading}
-          onRefresh={handleRefresh}
-        >
-          <VStack h={"100%"}>
-            <Box flex={1} bg={"principal.900"} w={"100%"} h="8%"></Box>
-            <Center flex={15} bg={"principal.900"}>
-              <LottieView
-                autoPlay
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "white",
-                }}
-                source={require("../../../assets/animations/wallet_loading.json")}
-              />
-            </Center>
-          </VStack>
-        </RefreshControl>
+        <VStack h={"100%"}>
+          <Box flex={1} bg={"principal.900"} w={"100%"} h="8%"></Box>
+          <Center flex={15} bg={"principal.900"}>
+            <LottieView
+              autoPlay
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "white",
+              }}
+              source={require("../../../assets/animations/wallet_loading.json")}
+            />
+          </Center>
+        </VStack>
       ) : (
         <Stack>
           {error == "" ? (
+            // <ScrollView
+            //   refreshControl={
+            //     <RefreshControl
+            //       refreshing={loading}
+            //       onRefresh={handleRefresh}
+            //     />
+            //   }
+            // >
             children
           ) : (
+            // </ScrollView>
+            // <RefreshControl
+            //   refreshing={loading}
+            //   onRefresh={handleRefresh}
+            //   style={{ flexDirection: "row" }}
+            // >
+            // </RefreshControl>
             <VStack backgroundColor="white" h={"100%"}>
               <Box bg={"red.500"} w={"100%"} h="8%"></Box>
               <Center>

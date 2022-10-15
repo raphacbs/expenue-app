@@ -12,7 +12,7 @@ import HeaderAccount from "./header";
 import Transactions from "./transactions";
 import CategoriesComponent from "./categories";
 import Container from "../../components/Container";
-import { SET_LOADING_ON } from "../../constants/ActionsTypes";
+import { SET_LOADING_OFF, SET_LOADING_ON } from "../../constants/ActionsTypes";
 const { width } = Dimensions.get("window");
 
 export default function TabAccount({
@@ -23,9 +23,10 @@ export default function TabAccount({
     onLoad();
   }, [dispatch]);
 
-  const onLoad = () => {
-    dispatch({ type: SET_LOADING_ON });
-    dispatch(getAllAccounts());
+  const onLoad = async () => {
+    await dispatch({ type: SET_LOADING_ON });
+    await dispatch(getAllAccounts());
+    await dispatch({ type: SET_LOADING_OFF });
   };
 
   return (
@@ -33,7 +34,7 @@ export default function TabAccount({
       <VStack space={6}>
         <HeaderAccount />
         <Transactions />
-        <CategoriesComponent />
+        {/* <CategoriesComponent /> */}
       </VStack>
     </Container>
   );

@@ -23,15 +23,15 @@ export const getAllAccounts: any = () => {
                 }
             }
             const url = `${endPoint}/findAll/${useUser().id}`;
-            console.log(url)
+
             const response = await api.get(url, config);
             dispatch(receiveAccounts(response.data))
             if (response.data.items.length > 0) {
-                dispatch(setSelectedAccount(response.data.items[0]));
+                await dispatch(setSelectedAccount(response.data.items[0]));
             }
-            dispatch({ type: types.SET_LOADING_OFF })
+
         } catch (error: any) {
-            console.log(error);
+
             const message = error ? error.message + ' - ' + error.code : 'Erro desconhecido';
             dispatch({ type: types.SET_ERROR, error: message })
             dispatch({ type: types.SET_LOADING_OFF })
@@ -62,9 +62,7 @@ export const setSelectedAccount: any = (selectedAccount: SimpleAccountResponseBo
                 }
             }
             const url = `${endPoint}/${selectedAccount.id}`;
-            console.log(url)
             const response = await api.get(url, config);
-            console.log(response.data)
             dispatch({
                 type: types.SET_SELECTED_ACCOUNT,
                 selectedAccount: response.data
@@ -90,12 +88,11 @@ export const getAccountDetailsByPeriod: any = (id: number, startDate: string, en
             }
             const url = `${endPoint}/${id}`;
             const response = await api.get(url, config);
-            console.log(response.data)
             dispatch({
                 type: types.SET_SELECTED_ACCOUNT,
                 selectedAccount: response.data
             })
-            dispatch({ type: types.SET_LOADING_OFF })
+
         } catch (error: any) {
             const message = error ? error.message + ' - ' + error.code : 'Erro desconhecido';
             dispatch({ type: types.SET_ERROR, error: message })

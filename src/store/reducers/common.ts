@@ -1,3 +1,4 @@
+
 import { CLEAR_ERROR, SET_ERROR, SET_LOADING_OFF, SET_LOADING_ON } from "../../constants/ActionsTypes";
 import { CommonState } from "../stateModels";
 
@@ -8,6 +9,7 @@ const initialState: CommonState = {
 }
 
 const Common = (state: CommonState = initialState, action: any) => {
+    console.log("Call: " + action.type)
     switch (action.type) {
         case SET_LOADING_ON:
             return {
