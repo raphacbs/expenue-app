@@ -4,55 +4,106 @@ import {
   Center,
   FlatList,
   Heading,
+  HStack,
+  Icon,
   IconButton,
+  ScrollView,
   Text,
   VStack,
 } from "native-base";
 import React from "react";
+import { connect } from "react-redux";
 
-const CategoriesComponent = () => {
+interface Props {
+  showValues: boolean;
+}
+
+const CategoriesComponent = (props: Props) => {
+  const { showValues } = props;
   const categories = [
-    { id: 1, description: "Food", icon: "fastfood" },
-    { id: 2, description: "Service", icon: "room-service" },
-    { id: 3, description: "Health", icon: "medical-services" },
-    { id: 4, description: "Others", icon: "pending" },
+    {
+      id: 1,
+      description: "Food",
+      icon: "fastfood",
+      type: "MaterialCommunityIcons",
+      totalExpensesDescription: "R$ 200,00",
+      iconColor: "blue.600",
+    },
+    {
+      id: 2,
+      description: "Service",
+      icon: "room-service",
+      type: "MaterialCommunityIcons",
+      totalExpensesDescription: "R$ 200,00",
+      iconColor: "green.600",
+    },
+    {
+      id: 3,
+      description: "Health",
+      icon: "medical-services",
+      type: "MaterialCommunityIcons",
+      totalExpensesDescription: "R$ 200,00",
+      iconColor: "red.600",
+    },
   ];
-  const render = (obj: any) => {
-    const { item } = obj;
+
+  const render = () => {
     return (
-      <Box
-        margin={5}
-        padding={2}
-        bg={"principal.900"}
-        w={20}
-        h={20}
-        rounded={10}
-        justifyContent={"center"}
-      >
-        <Center>
-          <IconButton
-            bg="principal.900"
-            rounded={50}
-            variant={"solid"}
-            _icon={{
-              as: MaterialIcons,
-              name: item.icon,
-              size: "lg",
-            }}
-          />
-          <Text color={"white"}>{item.description}</Text>
-        </Center>
-      </Box>
+      <VStack space={1}>
+        {categories.map((category, key) => {
+          return (
+            <HStack
+              space={4}
+              bg={"gray.200"}
+              w={"95%"}
+              //rounded={10}
+              //shadow={2}
+              h={50}
+              justifyContent={"space-between"}
+              key={key}
+            >
+              <HStack marginLeft={2} space={2} marginTop={2}>
+                <Center>
+                  <Icon
+                    as={MaterialIcons}
+                    name={category.icon}
+                    color={category.iconColor}
+                    size={"2xl"}
+                  />
+                </Center>
+                <Center>
+                  <Heading size={"sm"} color={"black"}>
+                    {category.description}
+                  </Heading>
+                </Center>
+              </HStack>
+              <Center>
+                <Heading size={"sm"} marginRight={2} color={"black"}>
+                  {showValues ? category.totalExpensesDescription : "****"}
+                </Heading>
+              </Center>
+            </HStack>
+          );
+        })}
+      </VStack>
     );
   };
   return (
     <VStack paddingLeft={"5%"}>
       <Heading color={"gray.500"} size={"xs"}>
-        Categories
+        Categories with most expenses
       </Heading>
-      <FlatList horizontal data={categories} renderItem={render} />
+      {/* <FlatList h={"25%"} data={categories} renderItem={render} /> */}
+      {render()}
     </VStack>
   );
 };
 
-export default CategoriesComponent;
+const mapStateToProps = (store: any) => {
+  return {
+    selectedAccount: store.accountReducer.selectedAccount,
+    showValues: store.accountReducer.showValues,
+  };
+};
+
+export default connect(mapStateToProps)(CategoriesComponent);

@@ -6,7 +6,7 @@ import { RootTabScreenProps } from "../../types";
 import { useDispatch } from "react-redux";
 import { getAllAccounts } from "../../store/actions/account";
 
-import { VStack } from "native-base";
+import { ScrollView, VStack } from "native-base";
 
 import HeaderAccount from "./header";
 import Transactions from "./transactions";
@@ -31,11 +31,13 @@ export default function TabAccount({
 
   return (
     <Container onRefresh={onLoad}>
-      <VStack space={6}>
+      {/* <ScrollView> */}
+      <VStack space={5}>
         <HeaderAccount />
         <Transactions />
-        {/* <CategoriesComponent /> */}
+        <CategoriesComponent />
       </VStack>
+      {/* </ScrollView> */}
     </Container>
   );
 }

@@ -6,6 +6,7 @@ import {
   Center,
   Link,
   Spinner,
+  HStack,
 } from "native-base";
 import React from "react";
 
@@ -40,10 +41,14 @@ const Transactions = (props: Props) => {
   };
 
   return (
-    <VStack paddingLeft={"5%"} height={"50%"}>
-      <Heading color={"gray.500"} size={"xs"}>
-        Transactions Details
-      </Heading>
+    <VStack paddingLeft={"5%"} minHeight={"35%"} maxHeight={"35%"}>
+      <HStack justifyContent={"space-between"}>
+        <Heading color={"gray.500"} size={"xs"}>
+          Transactions Details
+        </Heading>
+        {renderFooterComponent()}
+      </HStack>
+
       <VStack>
         {loadingDetails ? (
           <Center>
@@ -61,7 +66,7 @@ const Transactions = (props: Props) => {
               </Center>
             )}
             maxHeight={"100%"}
-            ListFooterComponent={renderFooterComponent}
+            //  ListFooterComponent={renderFooterComponent}
           />
         )}
       </VStack>
