@@ -1,0 +1,29 @@
+{
+  "count": 3,
+  "items": [
+    {
+      "id": 1,
+      "description": "Food",
+      "icon": "fastfood",
+      "type": "MaterialCommunityIcons",
+      "totalExpensesDescription": "R$ 200,00",
+      "iconColor": "blue"
+    },
+    {
+      "id": 2,
+      "description": "Service",
+      "icon": "room-service",
+      "type": "MaterialCommunityIcons",
+      "totalExpensesDescription": "R$ 200,00",
+      "iconColor": "green"
+    },
+    {
+      "id": 3,
+      "description": "Health",
+      "icon": "medical-services",
+      "type": "MaterialCommunityIcons",
+      "totalExpensesDescription": "R$ 200,00",
+      "iconColor": "red"
+    }
+  ]
+}
